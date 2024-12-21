@@ -6,8 +6,5 @@ using System.Threading.Tasks;
 
 namespace SecurityAgencyIS.View.Interface
 {
-    public interface IAddLine
-    {
-        public event EventHandler AddButt;
-    }
+
 }

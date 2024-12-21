@@ -1,0 +1,294 @@
+[
+  {
+    "table_name": "city",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "cityname",
+        "type": "text",
+        "lname": "Название города"
+      }
+    ]
+  },
+  {
+    "table_name": "street",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "streetname",
+        "type": "text",
+        "lname": "�������� �����"
+      }
+    ]
+  },
+  {
+    "table_name": "supplier",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "last_name",
+        "type": "text",
+        "lname": "�������"
+      },
+      {
+        "column_name": "first_name",
+        "type": "text",
+        "lname": "���"
+      },
+      {
+        "column_name": "middle_name",
+        "type": "text",
+        "lname": "��������"
+      },
+      {
+        "column_name": "account_number",
+        "type": "text",
+        "lname": "����� ��������"
+      },
+      {
+        "column_name": "inn",
+        "type": "integer",
+        "lname": "���"
+      },
+      {
+        "column_name": "bank_id",
+        "type": "integer",
+        "lname": "����",
+        "foreign_key": true,
+        "references": {
+          "table": "bank",
+          "type": "text",
+          "replace_with": "name"
+        }
+      }
+    ]
+  },
+  {
+    "table_name": "workers",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "last_name",
+        "type": "text",
+        "lname": "�������"
+      },
+      {
+        "column_name": "first_name",
+        "type": "text",
+        "lname": "���"
+      },
+      {
+        "column_name": "middle_name",
+        "type": "text",
+        "lname": "��������"
+      },
+      {
+        "column_name": "gender",
+        "type": "text",
+        "lname": "���"
+      },
+      {
+        "column_name": "work_experience",
+        "type": "double",
+        "lname": "���� ������"
+      },
+      {
+        "column_name": "birth_date",
+        "type": "date",
+        "lname": "���� ��������"
+      },
+      {
+        "column_name": "street_id",
+        "type": "integer",
+        "lname": "�����",
+        "foreign_key": true,
+        "references": {
+          "table": "street",
+          "type": "text",
+          "replace_with": "street_name"
+        }
+      },
+      {
+        "column_name": "city_id",
+        "type": "integer",
+        "lname": "�����",
+        "foreign_key": true,
+        "references": {
+          "table": "city",
+          "type": "text",
+          "replace_with": "city_name"
+        }
+      }
+    ]
+  },
+  {
+    "table_name": "building_materials",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "name",
+        "type": "text",
+        "lname": "�������� �������"
+      },
+      {
+        "column_name": "stock_quantity",
+        "type": "integer",
+        "lname": "���������� �������"
+      },
+      {
+        "column_name": "purchase_price",
+        "type": "double",
+        "lname": "���������� ����"
+      },
+      {
+        "column_name": "unit_id",
+        "type": "integer",
+        "lname": "��.���������",
+        "foreign_key": true,
+        "references": {
+          "table": "unit_of_measurement",
+          "type": "text",
+          "replace_with": "name"
+        }
+      }
+
+    ]
+  },
+  {
+    "table_name": "city",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "city_name",
+        "type": "text",
+        "lname": "�����"
+      }
+    ]
+  },
+  {
+    "table_name": "specialization",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "specialization_name",
+        "type": "text",
+        "lname": "�������������"
+      }
+    ]
+  },
+  {
+    "table_name": "street",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "street_name",
+        "type": "text",
+        "lname": "�����"
+      }
+    ]
+  },
+  {
+    "table_name": "delivery",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "delivery_date",
+        "type": "date",
+        "lname": "���� ��������"
+      }
+    ]
+  },
+  {
+    "table_name": "bank",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "name",
+        "type": "text",
+        "lname": "����"
+      }
+    ]
+  },
+  {
+    "table_name": "unit_of_measurement",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "name",
+        "type": "text",
+        "lname": "��.���������"
+      }
+    ]
+  },
+  {
+    "table_name": "work_type",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "name",
+        "type": "text",
+        "lname": "��� ������"
+      }
+    ]
+  }
+]

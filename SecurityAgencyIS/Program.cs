@@ -15,9 +15,9 @@ namespace SecurityAgencyIS
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             ApplicationConfiguration.Initialize();
-            MainWindow mainView = new MainWindow();
-            //LoginWindow loginView = new LoginWindow();
-            Application.Run(mainView);
+            //MainWindow mainView = new MainWindow();
+            LoginWindow loginView = new LoginWindow();
+            Application.Run(loginView);
         }
     }
 }

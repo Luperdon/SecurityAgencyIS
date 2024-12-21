@@ -12,20 +12,18 @@ using System.Windows.Forms;
 
 namespace SecurityAgencyIS.View.EditingWindows
 {
-    public partial class AddLineWindow : Form, IAddLine
+    public partial class AddLineWindow : Form
     {
-        public event EventHandler AddButt;
-        AddLinePresenter addLinePresenter;
+        public event EventHandler AddValuesButt;
         public AddLineWindow()
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
-            addLinePresenter = new AddLinePresenter(this);
         }
 
-        private void Add_Click(object sender, EventArgs e)
+        private void AddValuesButton_Click(object sender, EventArgs e)
         {
-
+            AddValuesButt?.Invoke(this, EventArgs.Empty);
         }
     }
 }

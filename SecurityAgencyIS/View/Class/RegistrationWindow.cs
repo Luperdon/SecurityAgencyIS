@@ -31,6 +31,7 @@ namespace SecurityAgencyIS
         private void ButtonHashPassword_Click(object sender, EventArgs e)
         {
             RegistrationButton?.Invoke(this, EventArgs.Empty);
+
         }
         public string userLogin => textBox1.Text;
         public string userPassword => textBox2.Text;
@@ -39,6 +40,11 @@ namespace SecurityAgencyIS
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Cancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -9,15 +9,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Windows.Forms;
+using System.Media;
 
 namespace SecurityAgencyIS.Presenter
 {
     public class MainWindowPresenter
     {
             IMainWindow _mainWindow { get; set; }
-            string currentTable { get; set; }
-            public MainWindowPresenter(IMainWindow mainWindow)
-            {
+            public string currentTable { get; set; }
+        public MainWindowPresenter(IMainWindow mainWindow)
+        {
                 _mainWindow = mainWindow;
                 _mainWindow.TableMenuEmployee += ShowEmployeeTable;
                 _mainWindow.TableMenuEvents += ShowEventsTable;
@@ -36,7 +37,32 @@ namespace SecurityAgencyIS.Presenter
                 _mainWindow.TableMenuWeaponBrand += ShowWeaponBrandTable;
                 _mainWindow.TableMenuUsers += ShowUsersTable;
                 _mainWindow.AddLineButt += AddLineButton;
-            }
+                _mainWindow.AboutTheProgram += AboutTheProgramButton;
+        }
+
+        public void AddLineButton(object args, EventArgs e)
+        {
+            DBManage dataBase = new DBManage();
+            NpgsqlConnection conn = new NpgsqlConnection(dataBase.connectionString);
+            conn.Open();
+
+            string tableName = currentTable;
+            string query = @"
+                SELECT COUNT(*)
+                FROM information_schema.columns
+                WHERE table_name = '" + currentTable + "'";
+
+            NpgsqlCommand command = new NpgsqlCommand(query, conn);
+
+            long columnCount = (long)command.ExecuteScalar();
+            MessageBox.Show($"Количество столбцов в таблице {currentTable} это {columnCount}");
+            AddLineWindow addLineWindow = new AddLineWindow();
+
+            List<string> columnNames = GetColumnNames(currentTable);
+
+            CreateTextBoxesForTable(addLineWindow, (int)columnCount, columnNames);
+            addLineWindow.ShowDialog();
+        }
 
         public void InsertRowIntoTable(AddLineWindow addLineWindow)
         {
@@ -62,7 +88,7 @@ namespace SecurityAgencyIS.Presenter
             string query = $"INSERT INTO {tableName} ({columns}) VALUES ({parameters})";
 
             NpgsqlConnection conn = new NpgsqlConnection(new DBManage().connectionString);
-            
+
             conn.Open();
             NpgsqlCommand command = new NpgsqlCommand(query, conn);
 
@@ -71,28 +97,9 @@ namespace SecurityAgencyIS.Presenter
                 object value = string.IsNullOrEmpty(pair.Value) ? DBNull.Value : pair.Value;
                 command.Parameters.AddWithValue($"@{pair.Key}", value);
             }
-        }
-        public void AddLineButton(object args, EventArgs e)
-        {
-            DBManage dataBase = new DBManage();
-            NpgsqlConnection conn = new NpgsqlConnection(dataBase.connectionString);
-            conn.Open();
 
-            string tableName = currentTable;
-            string query = @"
-                SELECT COUNT(*)
-                FROM information_schema.columns
-                WHERE table_name = '" + currentTable + "'";
-
-            NpgsqlCommand command = new NpgsqlCommand(query, conn);
-
-            long columnCount = (long)command.ExecuteScalar();
-            MessageBox.Show($"Количество столбцов в таблице {currentTable} это {columnCount}");
-            AddLineWindow addLineWindow = new AddLineWindow();
-
-            List<string> columnNames = GetColumnNames(currentTable);
-
-            CreateTextBoxesForTable(addLineWindow, (int)columnCount, columnNames);
+            //command.ExecuteNonQuery();
+            MessageBox.Show($"SQL-запрос: {query}");
         }
         public void CreateTextBoxesForTable(AddLineWindow addLineWindow, int columnCount, List<string> columnNames)
         {
@@ -120,16 +127,17 @@ namespace SecurityAgencyIS.Presenter
 
                 TextBox textBox = new TextBox();
                 textBox.Name = $"textBox{i}";
+                textBox.Tag = columnNames[i];
                 textBox.Location = new Point(100 + column * 150, 30 + row * 60);
                 addLineWindow.Controls.Add(textBox);
-            }           
+            }
         }
         public List<string> GetColumnNames(string tableName)
         {
             List<string> columnNames = new List<string>();
             DBManage dataBase = new DBManage();
             NpgsqlConnection conn = new NpgsqlConnection(dataBase.connectionString);
-            
+
             conn.Open();
             string query = @"
                 SELECT column_name
@@ -138,17 +146,16 @@ namespace SecurityAgencyIS.Presenter
                 ORDER BY ordinal_position";
 
             NpgsqlCommand command = new NpgsqlCommand(query, conn);
-                
+
             command.Parameters.AddWithValue("@tableName", tableName);
             NpgsqlDataReader reader = command.ExecuteReader();
-                    
+
             while (reader.Read())
             {
                 columnNames.Add(reader["column_name"].ToString());
-            }                                            
+            }
             return columnNames;
         }
-
         public void ShowEmployeeTable(object args, EventArgs e)
         {
             ShowTables showTables = new ShowTables();
@@ -244,6 +251,75 @@ namespace SecurityAgencyIS.Presenter
             ShowTables showTables = new ShowTables();
             showTables.UsersTable(_mainWindow.MainDataGridView);
             currentTable = "users";
+        }
+        ///
+        ////////////////////////Добавление/////////////////////////////
+        ///
+        public void AddIntoEmployeeTable(object args, EventArgs e)
+        {
+
+        }
+        public void AddIntoEventsTable(object args, EventArgs e)
+        {
+
+        }
+        public void AddIntoCitiesTable(object args, EventArgs e)
+        {
+
+        }
+        public void AddIntoStreetsTable(object args, EventArgs e)
+        {
+
+        }
+        public void AddIntoContractsTable(object args, EventArgs e)
+        {
+
+        }
+        public void AddIntoIndividualEntityTable(object args, EventArgs e)
+        {
+
+        }
+        public void AddIntoLegalEntityTable(object args, EventArgs e)
+        {
+
+        }
+        public void AddIntoOwnersTable(object args, EventArgs e)
+        {
+
+        }
+        public void AddIntoJobsTable(object args, EventArgs e)
+        {
+
+        }
+        public void AddIntoObjectsTable(object args, EventArgs e)
+        {
+
+        }
+        public void AddIntoPaymentsTable(object args, EventArgs e)
+        {
+
+        }
+        public void AddIntoScheduleTable(object args, EventArgs e)
+        {
+
+        }
+        public void AddIntoSpecialMeansTable(object args, EventArgs e)
+        {
+
+        }
+        public void AddIntoWeaponTable(object args, EventArgs e)
+        {
+
+        }
+        public void AddIntoWeaponBrandTable(object args, EventArgs e)
+        {
+
+        }
+
+        public void AboutTheProgramButton(object args, EventArgs e)
+        {
+            SoundPlayer simpleSound = new SoundPlayer(@"d:\Dev\AboutTheProgram.wav");
+            simpleSound.Play();
         }
     }
 }

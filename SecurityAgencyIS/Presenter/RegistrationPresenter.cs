@@ -55,7 +55,7 @@ namespace SecurityAgencyIS.Presenter
                 string expectedAdminPassword = "admin";
                 if (adminPassword != expectedAdminPassword)
                 {
-                    MessageBox.Show("Неверный пароль администратора. Вы не можете назначить роль admin.", "Ошибка роли");
+                    MessageBox.Show("Неверный пароль администратора. Вы не можете назначить роль.", "Ошибка роли");
                     return;
                 }
             }
