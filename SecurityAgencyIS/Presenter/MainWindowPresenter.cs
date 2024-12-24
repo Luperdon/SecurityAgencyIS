@@ -87,7 +87,14 @@ namespace SecurityAgencyIS.Presenter
                 }
                 else
                 {
-                dBManage.Delete(currentTable, Convert.ToInt32(deleteFindId));
+                    if (deleteFindId is int)
+                    {
+                    dBManage.Delete(currentTable, Convert.ToInt32(deleteFindId));
+                    }
+                    else
+                    {
+                        MessageBox.Show("Эта строчка при удалении может принимать только целочисленные значения.", "Ошибка");
+                    }
                 }
             }
         }
@@ -318,72 +325,9 @@ namespace SecurityAgencyIS.Presenter
             showTables.UsersTable(_mainWindow.MainDataGridView);
             currentTable = "users";
         }
-        ///
-        ////////////////////////Добавление/////////////////////////////
-        ///
-        public void AddIntoEmployeeTable(object args, EventArgs e)
-        {
-
-        }
-        public void AddIntoEventsTable(object args, EventArgs e)
-        {
-
-        }
-        public void AddIntoCitiesTable(object args, EventArgs e)
-        {
-
-        }
-        public void AddIntoStreetsTable(object args, EventArgs e)
-        {
-
-        }
-        public void AddIntoContractsTable(object args, EventArgs e)
-        {
-
-        }
-        public void AddIntoIndividualEntityTable(object args, EventArgs e)
-        {
-
-        }
-        public void AddIntoLegalEntityTable(object args, EventArgs e)
-        {
-
-        }
-        public void AddIntoOwnersTable(object args, EventArgs e)
-        {
-
-        }
-        public void AddIntoJobsTable(object args, EventArgs e)
-        {
-
-        }
-        public void AddIntoObjectsTable(object args, EventArgs e)
-        {
-
-        }
-        public void AddIntoPaymentsTable(object args, EventArgs e)
-        {
-
-        }
-        public void AddIntoScheduleTable(object args, EventArgs e)
-        {
-
-        }
-        public void AddIntoSpecialMeansTable(object args, EventArgs e)
-        {
-
-        }
-        public void AddIntoWeaponTable(object args, EventArgs e)
-        {
-
-        }
-        public void AddIntoWeaponBrandTable(object args, EventArgs e)
-        {
-
-        }
-
         public void AboutTheProgramButton(object args, EventArgs e)
         {
+            MessageBox.Show("Программа была разработана студентом НГТУ НЭТИ Соболевым И. О. Группа АВТ-214.", "О программе");
             SoundPlayer simpleSound = new SoundPlayer(@"d:\Dev\AboutTheProgram.wav");
             simpleSound.Play();
         }

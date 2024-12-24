@@ -76,6 +76,7 @@ namespace SecurityAgencyIS
                 {
                     AddLineButton.Visible = true;
                     ChangeButton.Visible = true;
+                    DeleteButton.Visible = true;
                 }
         }
 
@@ -302,26 +303,46 @@ namespace SecurityAgencyIS
                 }
             }
         }
-
+        private bool whiteTheme = false;
         private void тёмныйРежимToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Изменяем цвет фона формы на темный
-            panel1.BackColor = Color.FromArgb(0, 0, 0); // Темно-серый цвет
+            if (whiteTheme) 
+            { 
+            
+                panel1.BackColor = Color.FromArgb(64, 64, 64);
 
-            // Также можно изменить цвет текста или других элементов, если требуется
-            foreach (Control control in this.Controls)
+                foreach (Control control in this.Controls)
+                {
+                    if (control is Label || control is Button)
+                    {
+                        control.ForeColor = Color.White;
+                    }
+                    else if (control is TextBox || control is ComboBox)
+                    {
+                        control.BackColor = Color.FromArgb(30, 30, 30);
+                        control.ForeColor = Color.White;
+                    }
+                }
+                whiteTheme = false;
+            }
+            else
             {
-                if (control is Label || control is Button)
+                panel1.BackColor = Color.FromArgb(200, 200, 200);
+
+                foreach (Control control in this.Controls)
                 {
-                    control.ForeColor = Color.White; // Белый текст для лучшей видимости
+                    if (control is Label || control is Button)
+                    {
+                        control.ForeColor = Color.FromArgb(64, 64, 64);
+                    }
+                    else if (control is TextBox || control is ComboBox)
+                    {
+                        control.BackColor = Color.FromArgb(255, 255, 255);
+                        control.ForeColor = Color.FromArgb(64, 64, 64); ;
+                    }
                 }
-                else if (control is TextBox || control is ComboBox)
-                {
-                    control.BackColor = Color.FromArgb(30, 30, 30); // Еще темнее для текстовых полей
-                    control.ForeColor = Color.White;
-                }
+                whiteTheme = true;
             }
         }
-
     }
 }

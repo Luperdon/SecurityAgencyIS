@@ -50,7 +50,6 @@
             this.StripMenuUsers = new System.Windows.Forms.ToolStripMenuItem();
             this.разноеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.тёмныйРежимToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.светлыйРежимToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutTheProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeleteButton = new System.Windows.Forms.Button();
             this.AddLineButton = new System.Windows.Forms.Button();
@@ -245,8 +244,7 @@
             // 
             this.разноеToolStripMenuItem.BackColor = System.Drawing.Color.Goldenrod;
             this.разноеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.тёмныйРежимToolStripMenuItem,
-            this.светлыйРежимToolStripMenuItem});
+            this.тёмныйРежимToolStripMenuItem});
             this.разноеToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.разноеToolStripMenuItem.Name = "разноеToolStripMenuItem";
             this.разноеToolStripMenuItem.Size = new System.Drawing.Size(80, 30);
@@ -256,16 +254,9 @@
             // 
             this.тёмныйРежимToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.тёмныйРежимToolStripMenuItem.Name = "тёмныйРежимToolStripMenuItem";
-            this.тёмныйРежимToolStripMenuItem.Size = new System.Drawing.Size(228, 30);
-            this.тёмныйРежимToolStripMenuItem.Text = "Тёмный режим";
+            this.тёмныйРежимToolStripMenuItem.Size = new System.Drawing.Size(240, 30);
+            this.тёмныйРежимToolStripMenuItem.Text = "Поменять режим";
             this.тёмныйРежимToolStripMenuItem.Click += new System.EventHandler(this.тёмныйРежимToolStripMenuItem_Click);
-            // 
-            // светлыйРежимToolStripMenuItem
-            // 
-            this.светлыйРежимToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.светлыйРежимToolStripMenuItem.Name = "светлыйРежимToolStripMenuItem";
-            this.светлыйРежимToolStripMenuItem.Size = new System.Drawing.Size(228, 30);
-            this.светлыйРежимToolStripMenuItem.Text = "Светлый режим";
             // 
             // AboutTheProgramToolStripMenuItem
             // 
@@ -338,6 +329,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Haettenschweiler", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(796, 401);
