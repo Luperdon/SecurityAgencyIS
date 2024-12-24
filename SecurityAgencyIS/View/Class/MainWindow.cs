@@ -1,7 +1,7 @@
 using SecurityAgencyIS.Models;
 using SecurityAgencyIS.Presenter;
-using SecurityAgencyIS.View.EditingWindows;
 using SecurityAgencyIS.View.Interface;
+using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 
 namespace SecurityAgencyIS
@@ -25,133 +25,303 @@ namespace SecurityAgencyIS
         public event EventHandler TableMenuWeaponBrand;
         public event EventHandler TableMenuUsers;
 
-        public event EventHandler AddTableMenuEmployee;
-        public event EventHandler AddTableMenuEvents;
-        public event EventHandler AddTableMenuCities;
-        public event EventHandler AddTableMenuStreets;
-        public event EventHandler AddTableMenuContracts;
-        public event EventHandler AddTableMenuIndividualEntity;
-        public event EventHandler AddTableMenuLegalEntity;
-        public event EventHandler AddTableMenuOwners;
-        public event EventHandler AddTableMenuJobs;
-        public event EventHandler AddTableMenuObjects;
-        public event EventHandler AddTableMenuPayments;
-        public event EventHandler AddTableMenuSchedule;
-        public event EventHandler AddTableMenuSpecialMeans;
-        public event EventHandler AddTableMenuWeapon;
-        public event EventHandler AddTableMenuWeaponBrand;
-        public event EventHandler AddTableMenuUsers;
+        //public event EventHandler AddTableMenuEmployee;
+        //public event EventHandler AddTableMenuEvents;
+        //public event EventHandler AddTableMenuCities;
+        //public event EventHandler AddTableMenuStreets;
+        //public event EventHandler AddTableMenuContracts;
+        //public event EventHandler AddTableMenuIndividualEntity;
+        //public event EventHandler AddTableMenuLegalEntity;
+        //public event EventHandler AddTableMenuOwners;
+        //public event EventHandler AddTableMenuJobs;
+        //public event EventHandler AddTableMenuObjects;
+        //public event EventHandler AddTableMenuPayments;
+        //public event EventHandler AddTableMenuSchedule;
+        //public event EventHandler AddTableMenuSpecialMeans;
+        //public event EventHandler AddTableMenuWeapon;
+        //public event EventHandler AddTableMenuWeaponBrand;
+        //public event EventHandler AddTableMenuUsers;
 
         public event EventHandler AboutTheProgram;
 
-        public event EventHandler AddLineButt;
+        public event EventHandler AddButt;
+        public event EventHandler ChangeButt;
+        public event EventHandler DeleteButt;
+        public event EventHandler FindButt;
         public DataGridView MainDataGridView => dataGridView1;
-        DBManage dataBase;
+        private string _userRole;
+        private DBManage dataBase;
         public MainWindowPresenter mainWindowPresenter;
-        public MainWindow()
+
+        string tableName = "";
+        public MainWindow(string userRole)
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
             mainWindowPresenter = new MainWindowPresenter(this);
+            _userRole = userRole;
+            CustomizeUI();
         }
+
+        private void CustomizeUI()
+        {
+                if (_userRole == "user")
+                {
+                    AddLineButton.Visible = false;
+                    ChangeButton.Visible = false;
+                    DeleteButton.Visible = false;
+                    StripMenuUsers.Visible = false;
+                }
+                else if (_userRole == "admin" || _userRole == "manager")
+                {
+                    AddLineButton.Visible = true;
+                    ChangeButton.Visible = true;
+                }
+        }
+
         public void ConnectionString(DataGridView dataGridView)
         {
             dataBase.SqlConnectionReader(dataGridView);
         }
 
         private void AddLineButton_Click(object sender, EventArgs e)
+        {           
+            AddButt?.Invoke(this, EventArgs.Empty);
+        }
+        private void ChangeButton_Click(object sender, EventArgs e)
         {
-            AddLineButt?.Invoke(this, e);
+            ChangeButt?.Invoke(this, EventArgs.Empty);
         }
 
         private void StripMenuEmployee_Click(object sender, EventArgs e)
         {
             TableMenuEmployee?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "employee";
         }
 
         private void StripMenuEvents_Click(object sender, EventArgs e)
         {
             TableMenuEvents?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "events";
         }
 
         private void StripMenuCities_Click(object sender, EventArgs e)
         {
             TableMenuCities?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "cities";
         }
 
         private void StripMenuStreets_Click(object sender, EventArgs e)
         {
             TableMenuStreets?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "streets";
         }
 
         private void StripMenuContracts_Click(object sender, EventArgs e)
         {
             TableMenuContracts?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "contracts";
         }
 
         private void StripMenuIndividualEntity_Click(object sender, EventArgs e)
         {
             TableMenuIndividualEntity?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "individualentity";
         }
 
         private void StripMenuLegalEntity_Click(object sender, EventArgs e)
         {
             TableMenuLegalEntity?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "legalentity";
         }
 
         private void StripMenuOwners_Click(object sender, EventArgs e)
         {
             TableMenuOwners?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "owners";
         }
 
         private void StripMenuJobs_Click(object sender, EventArgs e)
         {
             TableMenuJobs?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "job";
         }
 
         private void StripMenuObjects_Click(object sender, EventArgs e)
         {
             TableMenuObjects?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "objects";
         }
 
         private void StripMenuPayments_Click(object sender, EventArgs e)
         {
             TableMenuPayments?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "payment";
         }
 
         private void StripMenuSchedule_Click(object sender, EventArgs e)
         {
             TableMenuSchedule?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "schedule";
         }
 
         private void StripMenuSpecialMeans_Click(object sender, EventArgs e)
         {
             TableMenuSpecialMeans?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "specialmeans";
         }
 
         private void StripMenuWeapon_Click(object sender, EventArgs e)
         {
             TableMenuWeapon?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "weapon";
         }
 
         private void StripMenuWeaponBrand_Click(object sender, EventArgs e)
         {
             TableMenuWeaponBrand?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "weaponbrand";
         }
 
         private void StripMenuUsers_Click(object sender, EventArgs e)
         {
             TableMenuUsers?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "users";
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+
         }
 
         private void AboutTheProgramToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AboutTheProgram?.Invoke(this, EventArgs.Empty);
         }
+        public string deleteFindId => textBox1.Text;
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            DeleteButt?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void SearchButton_Click(object sender, EventArgs e)
+        {
+            if (tableName == "")
+            {
+                MessageBox.Show("Выберите сначала таблицу!");
+            }
+            else
+            {
+                if(string.IsNullOrEmpty(comboBox1.Text) || string.IsNullOrEmpty(textBox1.Text)) 
+                {
+                    MessageBox.Show("Эта строчка не может быть пустой при поиске чего-либо.", "Ошибка");
+                }
+                else
+                {
+                dataBase.Find(comboBox1.Text, tableName, textBox1.Text, dataGridView1);
+                }
+            }
+        }
+
+        private void тёмныйРежимToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Изменяем цвет фона формы на темный
+            panel1.BackColor = Color.FromArgb(0, 0, 0); // Темно-серый цвет
+
+            // Также можно изменить цвет текста или других элементов, если требуется
+            foreach (Control control in this.Controls)
+            {
+                if (control is Label || control is Button)
+                {
+                    control.ForeColor = Color.White; // Белый текст для лучшей видимости
+                }
+                else if (control is TextBox || control is ComboBox)
+                {
+                    control.BackColor = Color.FromArgb(30, 30, 30); // Еще темнее для текстовых полей
+                    control.ForeColor = Color.White;
+                }
+            }
+        }
+
     }
 }

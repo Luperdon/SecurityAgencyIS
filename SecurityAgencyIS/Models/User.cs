@@ -11,11 +11,12 @@ namespace SecurityAgencyIS.Models
     public class User
     {
         string connectionString = "Server=localhost;Port=5432;Database=SecurityAgencyDB;User id=postgres;Password=1234;";
+        public string role { get; set; }
         public bool isLoginExists { get; set; }
         public bool isPasswordValid { get; set; }
         public void AuthenticateUser(string login, string enteredPassword)
         {
-            string query = "SELECT userpassword, salt FROM Users WHERE userlogin = @userlogin";
+            string query = "SELECT userpassword, salt, roles FROM Users WHERE userlogin = @userlogin";
 
             using (NpgsqlConnection conn = new NpgsqlConnection(connectionString))
             using (NpgsqlCommand command = new NpgsqlCommand(query, conn))
@@ -31,7 +32,7 @@ namespace SecurityAgencyIS.Models
                     {
                         isLoginExists = false;
                         isPasswordValid = false;
-                        return; // Завершаем метод, если логин не найден
+                        return;
                     }
 
                     // Если логин найден, читаем строку
@@ -42,7 +43,15 @@ namespace SecurityAgencyIS.Models
                     string storedSalt = reader["salt"].ToString();
 
                     // Проверяем пароль
-                    isPasswordValid = VerifyPassword(enteredPassword, storedHash, storedSalt);
+                    if (VerifyPassword(enteredPassword, storedHash, storedSalt))
+                    {
+                        isPasswordValid = true;
+                        role = reader["roles"].ToString();
+                    }
+                    else
+                    {
+                        isPasswordValid = false;
+                    }
                 }
             }
         }

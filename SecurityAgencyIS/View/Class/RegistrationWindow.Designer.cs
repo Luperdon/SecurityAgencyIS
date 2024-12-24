@@ -43,14 +43,16 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // button2
             // 
-            this.button2.BackColor = System.Drawing.Color.Goldenrod;
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button2.Font = new System.Drawing.Font("Haettenschweiler", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.button2.ForeColor = System.Drawing.SystemColors.Control;
             this.button2.Location = new System.Drawing.Point(300, 303);
@@ -64,7 +66,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label2.BackColor = System.Drawing.Color.White;
             this.label2.Font = new System.Drawing.Font("Haettenschweiler", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label2.Location = new System.Drawing.Point(210, 161);
             this.label2.Name = "label2";
@@ -75,7 +77,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label1.BackColor = System.Drawing.Color.White;
             this.label1.Font = new System.Drawing.Font("Haettenschweiler", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label1.Location = new System.Drawing.Point(228, 105);
             this.label1.Name = "label1";
@@ -85,6 +87,7 @@
             // 
             // textBox2
             // 
+            this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.textBox2.Location = new System.Drawing.Point(315, 163);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
@@ -93,6 +96,7 @@
             // 
             // textBox1
             // 
+            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.textBox1.Location = new System.Drawing.Point(315, 107);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
@@ -112,6 +116,7 @@
             // 
             // textBox3
             // 
+            this.textBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.textBox3.Location = new System.Drawing.Point(315, 226);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
@@ -120,6 +125,7 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "admin",
@@ -133,7 +139,7 @@
             // 
             // Cancel
             // 
-            this.Cancel.BackColor = System.Drawing.Color.Goldenrod;
+            this.Cancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Cancel.Font = new System.Drawing.Font("Haettenschweiler", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Cancel.ForeColor = System.Drawing.SystemColors.Control;
             this.Cancel.Location = new System.Drawing.Point(300, 378);
@@ -147,7 +153,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label4.BackColor = System.Drawing.Color.White;
             this.label4.Font = new System.Drawing.Font("Haettenschweiler", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label4.Location = new System.Drawing.Point(468, 103);
             this.label4.Name = "label4";
@@ -157,7 +163,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.Goldenrod;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Location = new System.Drawing.Point(-1, -3);
@@ -188,12 +194,23 @@
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.Controls.Add(this.pictureBox2);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Location = new System.Drawing.Point(-1, 81);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(812, 413);
             this.panel2.TabIndex = 18;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(-32, 0);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(1032, 436);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 14;
+            this.pictureBox2.TabStop = false;
             // 
             // RegistrationWindow
             // 
@@ -218,6 +235,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -239,5 +257,6 @@
         private PictureBox pictureBox1;
         private Label label5;
         private Panel panel2;
+        private PictureBox pictureBox2;
     }
 }

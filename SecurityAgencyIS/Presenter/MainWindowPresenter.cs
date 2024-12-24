@@ -1,5 +1,4 @@
 ﻿using SecurityAgencyIS.Models;
-using SecurityAgencyIS.View.EditingWindows;
 using SecurityAgencyIS.View.Interface;
 using Npgsql;
 using System;
@@ -10,6 +9,8 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Windows.Forms;
 using System.Media;
+using SecurityAgencyIS.View.Class;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace SecurityAgencyIS.Presenter
 {
@@ -36,126 +37,191 @@ namespace SecurityAgencyIS.Presenter
                 _mainWindow.TableMenuWeapon += ShowWeaponTable;
                 _mainWindow.TableMenuWeaponBrand += ShowWeaponBrandTable;
                 _mainWindow.TableMenuUsers += ShowUsersTable;
-                _mainWindow.AddLineButt += AddLineButton;
+                _mainWindow.AddButt += AddButton;
+                _mainWindow.ChangeButt += ChangeButton;
+                _mainWindow.DeleteButt += DeleteButton;
+                _mainWindow.FindButt += FindButton;
                 _mainWindow.AboutTheProgram += AboutTheProgramButton;
         }
 
-        public void AddLineButton(object args, EventArgs e)
+        public void AddButton(object args, EventArgs e)
         {
-            DBManage dataBase = new DBManage();
-            NpgsqlConnection conn = new NpgsqlConnection(dataBase.connectionString);
-            conn.Open();
-
-            string tableName = currentTable;
-            string query = @"
-                SELECT COUNT(*)
-                FROM information_schema.columns
-                WHERE table_name = '" + currentTable + "'";
-
-            NpgsqlCommand command = new NpgsqlCommand(query, conn);
-
-            long columnCount = (long)command.ExecuteScalar();
-            MessageBox.Show($"Количество столбцов в таблице {currentTable} это {columnCount}");
-            AddLineWindow addLineWindow = new AddLineWindow();
-
-            List<string> columnNames = GetColumnNames(currentTable);
-
-            CreateTextBoxesForTable(addLineWindow, (int)columnCount, columnNames);
-            addLineWindow.ShowDialog();
+            if (currentTable == null)
+            {
+                MessageBox.Show("Выберите сначала таблицу!");
+            }
+            else
+            {
+            AddWindow addForm = new AddWindow(currentTable);
+            addForm.Show();
+            }
         }
 
-        public void InsertRowIntoTable(AddLineWindow addLineWindow)
+
+        public void ChangeButton(object args, EventArgs e)
         {
-            Dictionary<string, string> columnValues = new Dictionary<string, string>();
-            foreach (Control control in addLineWindow.Controls)
-            {
-                if (control is TextBox textBox && textBox.Tag is string columnName)
+                if (currentTable == null)
                 {
-                    columnValues[columnName] = textBox.Text;
+                    MessageBox.Show("Выберите сначала таблицу!");
+                }
+                else
+                {
+                    ChangeWindow changeWindow = new ChangeWindow(currentTable);
+                    changeWindow.Show();
+                }
+        }
+
+        public void DeleteButton(object args, EventArgs e)
+        {
+            string deleteFindId = _mainWindow.deleteFindId;
+            DBManage dBManage = new DBManage();
+            if (currentTable == null)
+            {
+                MessageBox.Show("Выберите сначала таблицу!");
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(deleteFindId))
+                {
+                    MessageBox.Show("Эта строчка не может быть пустой при удалении чего-либо.", "Ошибка");
+                }
+                else
+                {
+                dBManage.Delete(currentTable, Convert.ToInt32(deleteFindId));
                 }
             }
-
-            if (columnValues.Count == 0)
-            {
-                MessageBox.Show("Нет данных для вставки.");
-                return;
-            }
-
-            string tableName = currentTable;
-            string columns = string.Join(", ", columnValues.Keys);
-            string parameters = string.Join(", ", columnValues.Keys.Select(k => $"@{k}"));
-
-            string query = $"INSERT INTO {tableName} ({columns}) VALUES ({parameters})";
-
-            NpgsqlConnection conn = new NpgsqlConnection(new DBManage().connectionString);
-
-            conn.Open();
-            NpgsqlCommand command = new NpgsqlCommand(query, conn);
-
-            foreach (var pair in columnValues)
-            {
-                object value = string.IsNullOrEmpty(pair.Value) ? DBNull.Value : pair.Value;
-                command.Parameters.AddWithValue($"@{pair.Key}", value);
-            }
-
-            //command.ExecuteNonQuery();
-            MessageBox.Show($"SQL-запрос: {query}");
         }
-        public void CreateTextBoxesForTable(AddLineWindow addLineWindow, int columnCount, List<string> columnNames)
+
+        public void FindButton(object args, EventArgs e)
         {
-            foreach (var control in addLineWindow.Controls.OfType<TextBox>().ToList())
+            string deleteFindId = _mainWindow.deleteFindId;
+            DBManage dBManage = new DBManage();
+            if (currentTable == null)
             {
-                addLineWindow.Controls.Remove(control);
+                MessageBox.Show("Выберите сначала таблицу!");
             }
-            foreach (var control in addLineWindow.Controls.OfType<Label>().ToList())
+            else
             {
-                addLineWindow.Controls.Remove(control);
-            }
-
-            for (int i = 0; i < columnCount; i++)
-            {
-                int column = i / 4;
-                int row = i % 4;
-
-                Label label = new Label();
-                label.Text = columnNames[i];
-                label.Name = $"label{i}";
-                label.Location = new Point(100 + column * 150, 10 + row * 60);
-                label.AutoSize = true;
-                addLineWindow.Controls.Add(label);
-
-
-                TextBox textBox = new TextBox();
-                textBox.Name = $"textBox{i}";
-                textBox.Tag = columnNames[i];
-                textBox.Location = new Point(100 + column * 150, 30 + row * 60);
-                addLineWindow.Controls.Add(textBox);
+                //dBManage.Find(findId, currentTable, deleteFindId);
             }
         }
-        public List<string> GetColumnNames(string tableName)
-        {
-            List<string> columnNames = new List<string>();
-            DBManage dataBase = new DBManage();
-            NpgsqlConnection conn = new NpgsqlConnection(dataBase.connectionString);
 
-            conn.Open();
-            string query = @"
-                SELECT column_name
-                FROM information_schema.columns
-                WHERE table_name = @tableName
-                ORDER BY ordinal_position";
+        //public void AddLineButton(object args, EventArgs e)
+        //{
+        //    DBManage dataBase = new DBManage();
+        //    NpgsqlConnection conn = new NpgsqlConnection(dataBase.connectionString);
+        //    conn.Open();
 
-            NpgsqlCommand command = new NpgsqlCommand(query, conn);
+        //    string tableName = currentTable;
+        //    string query = @"
+        //        SELECT COUNT(*)
+        //        FROM information_schema.columns
+        //        WHERE table_name = '" + currentTable + "'";
 
-            command.Parameters.AddWithValue("@tableName", tableName);
-            NpgsqlDataReader reader = command.ExecuteReader();
+        //    NpgsqlCommand command = new NpgsqlCommand(query, conn);
 
-            while (reader.Read())
-            {
-                columnNames.Add(reader["column_name"].ToString());
-            }
-            return columnNames;
-        }
+        //    long columnCount = (long)command.ExecuteScalar();
+        //    MessageBox.Show($"Количество столбцов в таблице {currentTable} это {columnCount}");
+        //    AddLineWindow addLineWindow = new AddLineWindow();
+
+        //    List<string> columnNames = GetColumnNames(currentTable);
+
+        //    CreateTextBoxesForTable(addLineWindow, (int)columnCount, columnNames);
+        //    addLineWindow.ShowDialog();
+        //}
+
+        //public void InsertRowIntoTable(AddLineWindow addLineWindow)
+        //{
+        //    Dictionary<string, string> columnValues = new Dictionary<string, string>();
+        //    foreach (Control control in addLineWindow.Controls)
+        //    {
+        //        if (control is TextBox textBox && textBox.Tag is string columnName)
+        //        {
+        //            columnValues[columnName] = textBox.Text;
+        //        }
+        //    }
+
+        //    if (columnValues.Count == 0)
+        //    {
+        //        MessageBox.Show("Нет данных для вставки.");
+        //        return;
+        //    }
+
+        //    string tableName = currentTable;
+        //    string columns = string.Join(", ", columnValues.Keys);
+        //    string parameters = string.Join(", ", columnValues.Keys.Select(k => $"@{k}"));
+
+        //    string query = $"INSERT INTO {tableName} ({columns}) VALUES ({parameters})";
+
+        //    NpgsqlConnection conn = new NpgsqlConnection(new DBManage().connectionString);
+
+        //    conn.Open();
+        //    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+
+        //    foreach (var pair in columnValues)
+        //    {
+        //        object value = string.IsNullOrEmpty(pair.Value) ? DBNull.Value : pair.Value;
+        //        command.Parameters.AddWithValue($"@{pair.Key}", value);
+        //    }
+
+        //    //command.ExecuteNonQuery();
+        //    MessageBox.Show($"SQL-запрос: {query}");
+        //}
+        //public void CreateTextBoxesForTable(AddLineWindow addLineWindow, int columnCount, List<string> columnNames)
+        //{
+        //    foreach (var control in addLineWindow.Controls.OfType<TextBox>().ToList())
+        //    {
+        //        addLineWindow.Controls.Remove(control);
+        //    }
+        //    foreach (var control in addLineWindow.Controls.OfType<Label>().ToList())
+        //    {
+        //        addLineWindow.Controls.Remove(control);
+        //    }
+
+        //    for (int i = 0; i < columnCount; i++)
+        //    {
+        //        int column = i / 4;
+        //        int row = i % 4;
+
+        //        Label label = new Label();
+        //        label.Text = columnNames[i];
+        //        label.Name = $"label{i}";
+        //        label.Location = new Point(100 + column * 150, 10 + row * 60);
+        //        label.AutoSize = true;
+        //        addLineWindow.Controls.Add(label);
+
+
+        //        TextBox textBox = new TextBox();
+        //        textBox.Name = $"textBox{i}";
+        //        textBox.Tag = columnNames[i];
+        //        textBox.Location = new Point(100 + column * 150, 30 + row * 60);
+        //        addLineWindow.Controls.Add(textBox);
+        //    }
+        //}
+        //public List<string> GetColumnNames(string tableName)
+        //{
+        //    List<string> columnNames = new List<string>();
+        //    DBManage dataBase = new DBManage();
+        //    NpgsqlConnection conn = new NpgsqlConnection(dataBase.connectionString);
+
+        //    conn.Open();
+        //    string query = @"
+        //        SELECT column_name
+        //        FROM information_schema.columns
+        //        WHERE table_name = @tableName
+        //        ORDER BY ordinal_position";
+
+        //    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+
+        //    command.Parameters.AddWithValue("@tableName", tableName);
+        //    NpgsqlDataReader reader = command.ExecuteReader();
+
+        //    while (reader.Read())
+        //    {
+        //        columnNames.Add(reader["column_name"].ToString());
+        //    }
+        //    return columnNames;
+        //}
         public void ShowEmployeeTable(object args, EventArgs e)
         {
             ShowTables showTables = new ShowTables();

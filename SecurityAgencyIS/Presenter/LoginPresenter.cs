@@ -28,8 +28,6 @@ namespace SecurityAgencyIS.Presenter
         {
             string login = _login.userLogin;
             string password = _login.userPassword;
-            MainWindow mainWindow = new MainWindow();
-            LoginWindow loginWindow = new LoginWindow();
 
             if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password))
             {
@@ -37,24 +35,25 @@ namespace SecurityAgencyIS.Presenter
                 return;
             }
 
-            DBManage dataBase = new DBManage();
             User user = new User();
-
             user.AuthenticateUser(login, password);
-            if(!user.isLoginExists)
+
+            if (!user.isLoginExists)
             {
                 MessageBox.Show("Пользователя с таким логином не существует.", "Пользователь не найден");
+                return;
             }
             else if (!user.isPasswordValid)
             {
                 MessageBox.Show("Неверный пароль", "Ошибка");
+                return;
             }
-            else
-            {
-                mainWindow.ShowDialog();
-                Form currentForm = args as Form; // Приведение к типу Form
-                currentForm?.Close();
-            }
+            MessageBox.Show($"Роль: {user.role}");
+            // Успешный вход
+            MainWindow mainWindow = new MainWindow(user.role);
+            // Открытие главного окна
+            mainWindow.ShowDialog();
         }
+
     }
 }

@@ -27,12 +27,12 @@
       {
         "column_name": "streetname",
         "type": "text",
-        "lname": "�������� �����"
+        "lname": "Название улицы"
       }
     ]
   },
   {
-    "table_name": "supplier",
+    "table_name": "employee",
     "columns": [
       {
         "column_name": "id",
@@ -41,108 +41,151 @@
         "primary_key": true
       },
       {
-        "column_name": "last_name",
+        "column_name": "lastname",
         "type": "text",
-        "lname": "�������"
+        "lname": "Фамилия"
       },
       {
-        "column_name": "first_name",
+        "column_name": "firstname",
         "type": "text",
-        "lname": "���"
+        "lname": "Имя"
       },
       {
-        "column_name": "middle_name",
+        "column_name": "patronymic",
         "type": "text",
-        "lname": "��������"
+        "lname": "Отчество"
       },
       {
-        "column_name": "account_number",
+        "column_name": "city_id",
         "type": "text",
-        "lname": "����� ��������"
+        "lname": "Город",
+        "foreign_key": true,
+        "references": {
+          "table": "city",
+          "type": "text",
+          "replace_with": "cityname"
+        }
       },
       {
         "column_name": "inn",
-        "type": "integer",
-        "lname": "���"
-      },
-      {
-        "column_name": "bank_id",
-        "type": "integer",
-        "lname": "����",
-        "foreign_key": true,
-        "references": {
-          "table": "bank",
-          "type": "text",
-          "replace_with": "name"
-        }
-      }
-    ]
-  },
-  {
-    "table_name": "workers",
-    "columns": [
-      {
-        "column_name": "id",
-        "type": "integer",
-        "lname": "ID",
-        "primary_key": true
-      },
-      {
-        "column_name": "last_name",
         "type": "text",
-        "lname": "�������"
-      },
-      {
-        "column_name": "first_name",
-        "type": "text",
-        "lname": "���"
-      },
-      {
-        "column_name": "middle_name",
-        "type": "text",
-        "lname": "��������"
-      },
-      {
-        "column_name": "gender",
-        "type": "text",
-        "lname": "���"
-      },
-      {
-        "column_name": "work_experience",
-        "type": "double",
-        "lname": "���� ������"
-      },
-      {
-        "column_name": "birth_date",
-        "type": "date",
-        "lname": "���� ��������"
+        "lname": "ИНН"
       },
       {
         "column_name": "street_id",
         "type": "integer",
-        "lname": "�����",
+        "lname": "Улица",
         "foreign_key": true,
         "references": {
           "table": "street",
           "type": "text",
-          "replace_with": "street_name"
+          "replace_with": "streetname"
+        }
+      },
+      {
+        "column_name": "events_id",
+        "type": "integer",
+        "lname": "Мероприятие",
+        "foreign_key": true,
+        "references": {
+          "table": "events",
+          "type": "text",
+          "replace_with": "eventcharacteristics"
+        }
+      },
+      {
+        "column_name": "surcharge",
+        "type": "integer",
+        "lname": "Надбавка"
+      },
+      {
+        "column_name": "job_id",
+        "type": "integer",
+        "lname": "Должность",
+        "foreign_key": true,
+        "references": {
+          "table": "job",
+          "type": "text",
+          "replace_with": "jobname"
+        }
+      },
+      {
+        "column_name": "phonenumber",
+        "type": "text",
+        "lname": "Номер телефона"
+      },
+      {
+        "column_name": "idnumber",
+        "type": "text",
+        "lname": "Номер уд-я"
+      },
+      {
+        "column_name": "licensenumber",
+        "type": "text",
+        "lname": "Номер лицензии"
+      },
+      {
+        "column_name": "pfr",
+        "type": "text",
+        "lname": "ПФР"
+      },
+      {
+        "column_name": "dateofemployment",
+        "type": "date",
+        "lname": "Дата трудоустройства"
+      },
+      {
+        "column_name": "dateofdismissal",
+        "type": "date",
+        "lname": "Дата увольнения"
+      }
+    ]
+  },
+  {
+    "table_name": "owners",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "housenumber",
+        "type": "text",
+        "lname": "Номер дома"
+      },
+      {
+        "column_name": "phonenumber",
+        "type": "text",
+        "lname": "Номер телефона"
+      },
+      {
+        "column_name": "street_id",
+        "type": "integer",
+        "lname": "Улица",
+        "foreign_key": true,
+        "references": {
+          "table": "street",
+          "type": "text",
+          "replace_with": "streetname"
         }
       },
       {
         "column_name": "city_id",
         "type": "integer",
-        "lname": "�����",
+        "lname": "Город",
         "foreign_key": true,
         "references": {
           "table": "city",
           "type": "text",
-          "replace_with": "city_name"
+          "replace_with": "cityname"
         }
       }
     ]
   },
   {
-    "table_name": "building_materials",
+    "table_name": "weapon",
     "columns": [
       {
         "column_name": "id",
@@ -151,36 +194,41 @@
         "primary_key": true
       },
       {
-        "column_name": "name",
+        "column_name": "weaponname",
         "type": "text",
-        "lname": "�������� �������"
+        "lname": "Название оружия"
       },
       {
-        "column_name": "stock_quantity",
+        "column_name": "weaponnumber",
         "type": "integer",
-        "lname": "���������� �������"
+        "lname": "Номер оружия"
       },
       {
-        "column_name": "purchase_price",
+        "column_name": "weaponbrand_id",
         "type": "double",
-        "lname": "���������� ����"
-      },
-      {
-        "column_name": "unit_id",
-        "type": "integer",
-        "lname": "��.���������",
+        "lname": "Марка оружия",
         "foreign_key": true,
         "references": {
-          "table": "unit_of_measurement",
+          "table": "weaponbrand",
           "type": "text",
-          "replace_with": "name"
+          "replace_with": "cityname" ////
+        }
+      },
+      {
+        "column_name": "employee_id",
+        "type": "integer",
+        "lname": "Сотрудник",
+        "foreign_key": true,
+        "references": {
+          "table": "employee",
+          "type": "text",
+          "replace_with": "firstname"
         }
       }
-
     ]
   },
   {
-    "table_name": "city",
+    "table_name": "weaponbrand",
     "columns": [
       {
         "column_name": "id",
@@ -189,14 +237,34 @@
         "primary_key": true
       },
       {
-        "column_name": "city_name",
+        "column_name": "brandname",
         "type": "text",
-        "lname": "�����"
+        "lname": "Название марки"
+      },
+      {
+        "column_name": "weapontype",
+        "type": "text",
+        "lname": "Тип оружия"
+      },
+      {
+        "column_name": "caliber",
+        "type": "text",
+        "lname": "Калибр"
+      },
+      {
+        "column_name": "storecapacity",
+        "type": "text",
+        "lname": "Ёмкость магазина"
+      },
+      {
+        "column_name": "weight",
+        "type": "integer",
+        "lname": "Вес"
       }
     ]
   },
   {
-    "table_name": "specialization",
+    "table_name": "specialmeans",
     "columns": [
       {
         "column_name": "id",
@@ -205,14 +273,30 @@
         "primary_key": true
       },
       {
-        "column_name": "specialization_name",
+        "column_name": "specialmeansname",
         "type": "text",
-        "lname": "�������������"
+        "lname": "Название спецсредства"
+      },
+      {
+        "column_name": "specialmeansnumber",
+        "type": "integer",
+        "lname": "Номер спецсредства"
+      },
+      {
+        "column_name": "employee_id",
+        "type": "integer",
+        "lname": "Сотрудник",
+        "foreign_key": true,
+        "references": {
+          "table": "employee",
+          "type": "text",
+          "replace_with": "firstname"
+        }
       }
     ]
   },
   {
-    "table_name": "street",
+    "table_name": "schedule",
     "columns": [
       {
         "column_name": "id",
@@ -221,30 +305,41 @@
         "primary_key": true
       },
       {
-        "column_name": "street_name",
-        "type": "text",
-        "lname": "�����"
-      }
-    ]
-  },
-  {
-    "table_name": "delivery",
-    "columns": [
-      {
-        "column_name": "id",
-        "type": "integer",
-        "lname": "ID",
-        "primary_key": true
-      },
-      {
-        "column_name": "delivery_date",
+        "column_name": "startdate",
         "type": "date",
-        "lname": "���� ��������"
+        "lname": "Дата начала"
+      },
+      {
+        "column_name": "enddate",
+        "type": "date",
+        "lname": "Дата окончания"
+      },
+      {
+        "column_name": "employee_id",
+        "type": "integer",
+        "lname": "Сотрудник",
+        "foreign_key": true,
+        "references": {
+          "table": "employee",
+          "type": "text",
+          "replace_with": "firstname"
+        }
+      },
+      {
+        "column_name": "object_id",
+        "type": "integer",
+        "lname": "Объект",
+        "foreign_key": true,
+        "references": {
+          "table": "objects",
+          "type": "text",
+          "replace_with": "objectname"
+        }
       }
     ]
   },
   {
-    "table_name": "bank",
+    "table_name": "objects",
     "columns": [
       {
         "column_name": "id",
@@ -253,14 +348,30 @@
         "primary_key": true
       },
       {
-        "column_name": "name",
+        "column_name": "objectname",
         "type": "text",
-        "lname": "����"
+        "lname": "Название объекта"
+      },
+      {
+        "column_name": "objecttype",
+        "type": "text",
+        "lname": "Тип объекта"
+      },
+      {
+        "column_name": "legalentity_id",
+        "type": "integer",
+        "lname": "Юр. лицо",
+        "foreign_key": true,
+        "references": {
+          "table": "legalentity",
+          "type": "text",
+          "replace_with": "companyname"
+        }
       }
     ]
   },
   {
-    "table_name": "unit_of_measurement",
+    "table_name": "legalentity",
     "columns": [
       {
         "column_name": "id",
@@ -269,14 +380,40 @@
         "primary_key": true
       },
       {
-        "column_name": "name",
+        "column_name": "companyname",
         "type": "text",
-        "lname": "��.���������"
+        "lname": "Название компании"
+      },
+      {
+        "column_name": "inn",
+        "type": "text",
+        "lname": "ИНН"
+      },
+      {
+        "column_name": "kpp",
+        "type": "text",
+        "lname": "КПП"
+      },
+      {
+        "column_name": "ogrn",
+        "type": "text",
+        "lname": "ОГРН"
+      },
+      {
+        "column_name": "contract_id",
+        "type": "integer",
+        "lname": "Номер договора",
+        "foreign_key": true,
+        "references": {
+          "table": "contracts",
+          "type": "text",
+          "replace_with": "contractnumber"
+        }
       }
     ]
   },
   {
-    "table_name": "work_type",
+    "table_name": "contracts",
     "columns": [
       {
         "column_name": "id",
@@ -285,9 +422,314 @@
         "primary_key": true
       },
       {
-        "column_name": "name",
+        "column_name": "contractnumber",
+        "type": "integer",
+        "lname": "Номер договора"
+      },
+      {
+        "column_name": "contractdate",
+        "type": "date",
+        "lname": "Дата договора"
+      },
+      {
+        "column_name": "objecttype",
         "type": "text",
-        "lname": "��� ������"
+        "lname": "Тип объекта"
+      },
+      {
+        "column_name": "status",
+        "type": "boolean",
+        "lname": "Статус"
+      },
+      {
+        "column_name": "completiondate",
+        "type": "date",
+        "lname": "Дата завершения"
+      }
+    ]
+  },
+  {
+    "table_name": "individualentity",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "lastname",
+        "type": "text",
+        "lname": "Фамилия"
+      },
+      {
+        "column_name": "firstname",
+        "type": "text",
+        "lname": "Имя"
+      },
+      {
+        "column_name": "patronymic",
+        "type": "text",
+        "lname": "Отчество"
+      },
+      {
+        "column_name": "passportnumber",
+        "type": "text",
+        "lname": "Номер паспорта"
+      },
+      {
+        "column_name": "passportseries",
+        "type": "text",
+        "lname": "Серия паспорта"
+      },
+      {
+        "column_name": "contract_id",
+        "type": "integer",
+        "lname": "Номер договора",
+        "foreign_key": true,
+        "references": {
+          "table": "contracts",
+          "type": "text",
+          "replace_with": "contractnumber"
+        }
+      }
+    ]
+  },
+  {
+    "table_name": "schedule",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "startdate",
+        "type": "date",
+        "lname": "Дата начала"
+      },
+      {
+        "column_name": "enddate",
+        "type": "date",
+        "lname": "Дата конца"
+      },
+      {
+        "column_name": "employee_id",
+        "type": "integer",
+        "lname": "Сотрудник",
+        "foreign_key": true,
+        "references": {
+          "table": "employee",
+          "type": "text",
+          "replace_with": "firstname"
+        }
+      },
+      {
+        "column_name": "object_id",
+        "type": "integer",
+        "lname": "Объект",
+        "foreign_key": true,
+        "references": {
+          "table": "objects",
+          "type": "text",
+          "replace_with": "objectname"
+        }
+      }
+    ]
+  },
+  {
+    "table_name": "payment",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "paymentsum",
+        "type": "integer",
+        "lname": "Сумма платежа"
+      },
+      {
+        "column_name": "date",
+        "type": "date",
+        "lname": "Дата"
+      },
+      {
+        "column_name": "paymentnumber",
+        "type": "integer",
+        "lname": "Номер платежа"
+      },
+      {
+        "column_name": "paymenttype",
+        "type": "text",
+        "lname": "Тип платежа"
+      },
+      {
+        "column_name": "contract_id",
+        "type": "integer",
+        "lname": "Номер договора",
+        "foreign_key": true,
+        "references": {
+          "table": "contracts",
+          "type": "text",
+          "replace_with": "contractnumber"
+        }
+      }
+    ]
+  },
+  {
+    "table_name": "employeeevent",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "employee_id",
+        "type": "integer",
+        "lname": "Сотрудник",
+        "foreign_key": true,
+        "references": {
+          "table": "employee",
+          "type": "text",
+          "replace_with": "firstname"
+        }
+      },
+      {
+        "column_name": "events_id",
+        "type": "integer",
+        "lname": "Мероприятие",
+        "foreign_key": true,
+        "references": {
+          "table": "events",
+          "type": "text",
+          "replace_with": "eventcharacteristics"
+        }
+      }
+    ]
+  },
+  {
+    "table_name": "individualentityowner",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "owner_id",
+        "type": "integer",
+        "lname": "Номер владельца",
+        "foreign_key": true,
+        "references": {
+          "table": "owners",
+          "type": "text",
+          "replace_with": "phonenumber"
+        }
+      },
+      {
+        "column_name": "individualentity_id",
+        "type": "integer",
+        "lname": "Имя владельца",
+        "foreign_key": true,
+        "references": {
+          "table": "individualentity",
+          "type": "text",
+          "replace_with": "firstname"
+        }
+      }
+    ]
+  },
+  {
+    "table_name": "legalentitycontract",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "legalentity_id",
+        "type": "integer",
+        "lname": "Юр. лицо",
+        "foreign_key": true,
+        "references": {
+          "table": "legalentity",
+          "type": "text",
+          "replace_with": "companyname"
+        }
+      },
+      {
+        "column_name": "contract_id",
+        "type": "integer",
+        "lname": "Номер договора",
+        "foreign_key": true,
+        "references": {
+          "table": "contracts",
+          "type": "text",
+          "replace_with": "contractnumber"
+        }
+      }
+    ]
+  },
+  {
+    "table_name": "legalentityowner",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "owner_id",
+        "type": "integer",
+        "lname": "Номер владельца",
+        "foreign_key": true,
+        "references": {
+          "table": "owners",
+          "type": "text",
+          "replace_with": "phonenumber"
+        }
+      },
+      {
+        "column_name": "legalentity_id",
+        "type": "integer",
+        "lname": "Юр. лицо",
+        "foreign_key": true,
+        "references": {
+          "table": "legalentity",
+          "type": "text",
+          "replace_with": "companyname"
+        }
+      }
+    ]
+  },
+  {
+    "table_name": "job",
+    "columns": [
+      {
+        "column_name": "id",
+        "type": "integer",
+        "lname": "ID",
+        "primary_key": true
+      },
+      {
+        "column_name": "jobname",
+        "type": "text",
+        "lname": "Название должности"
+      },
+      {
+        "column_name": "salary",
+        "type": "integer",
+        "lname": "Зарплата"
       }
     ]
   }
