@@ -48,7 +48,7 @@ namespace SecurityAgencyIS.Presenter
                 MessageBox.Show("Неверный пароль", "Ошибка");
                 return;
             }
-            MessageBox.Show($"Роль: {user.role}");
+            MessageBox.Show($"Успешный вход с ролью: {user.role}");
             // Успешный вход
             MainWindow mainWindow = new MainWindow(user.role);
             // Открытие главного окна

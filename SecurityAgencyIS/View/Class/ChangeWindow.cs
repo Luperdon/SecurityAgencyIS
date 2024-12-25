@@ -21,7 +21,7 @@ namespace SecurityAgencyIS.View.Class
         {
             this.tablename = tablename;
             dbManage = new DBManage();
-            string jsonFilePath = "C:\\Users\\serov\\source\\repos\\building_organizations\\building_organizations\\Entity\\Stetham.json";
+            string jsonFilePath = "C:\\Users\\ilcat\\source\\repos\\SecurityAgencyIS\\SecurityAgencyIS\\View\\EditingWindows\\Voorhees.json";
             string jsonContent = File.ReadAllText(jsonFilePath);
             dynamic tables = JsonConvert.DeserializeObject(jsonContent);
             this.Text = tablename;
@@ -47,12 +47,14 @@ namespace SecurityAgencyIS.View.Class
                         this.Controls.Add(textBox);
                         textBoxesList.Add(textBox);
                     }
+                    MessageBox.Show($"Таблица: {tablename}, Колонки: {table.columns}");
+
                 }
             }
             Button saveButton = new Button
             {
                 Text = "Сохранить",
-                Location = new System.Drawing.Point(150, 20 + i * 40),
+                Location = new Point(150, 20 + i * 40),
                 Width = 100
             };
             saveButton.BackColor = Color.FromArgb(255, 128, 128);
@@ -69,24 +71,38 @@ namespace SecurityAgencyIS.View.Class
         {
             try
             {
-                string[] data = { };
-                Array.Resize(ref data, textBoxesList.Count);
-                if (!int.TryParse(textBoxesList[0].Text, out int intResult))
-                    throw new Exception($"Cannot convert '{textBoxesList[0].Text}' to integer. ID!!!");
+                string[] data = new string[textBoxesList.Count];
+
+                // Проверка первого поля как ID
+                if (string.IsNullOrWhiteSpace(textBoxesList[0].Text) || !int.TryParse(textBoxesList[0].Text, out int intResult))
+                {
+                    throw new Exception($"Поле ID должно быть заполнено и содержать только целое число.");
+                }
+
+                // Заполнение массива данными из TextBox
                 for (int i = 0; i < textBoxesList.Count; i++)
                 {
-                    string value = textBoxesList[i].Text;
+                    string value = textBoxesList[i].Text?.Trim();
+                    //if (string.IsNullOrWhiteSpace(value))
+                    //{
+                    //    throw new Exception($"Поле {i + 1} не заполнено. Пожалуйста, заполните все поля.");
+                    //}
                     data[i] = value;
                 }
+
+                // Логирование данных перед обновлением
+                MessageBox.Show($"Данные для обновления: {string.Join(", ", data)}");
+
+                // Вызов метода Update
                 dbManage.Update(tablename, data);
+
+                // Успешное сообщение
+                MessageBox.Show("Данные успешно сохранены!");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Неверный запрос:{ex.Message}");
-            }
-            finally
-            {
-                MessageBox.Show($"Данные успешно сохранены!");
+                // Сообщение об ошибке
+                MessageBox.Show($"Неверный запрос: {ex.Message}");
             }
         }
     }

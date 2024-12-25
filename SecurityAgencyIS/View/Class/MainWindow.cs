@@ -3,6 +3,7 @@ using SecurityAgencyIS.Presenter;
 using SecurityAgencyIS.View.Interface;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
+using System.Windows.Forms;
 
 namespace SecurityAgencyIS
 {
@@ -43,6 +44,8 @@ namespace SecurityAgencyIS
         //public event EventHandler AddTableMenuUsers;
 
         public event EventHandler AboutTheProgram;
+        public event EventHandler Documents;
+        public event EventHandler UserManual;
 
         public event EventHandler AddButt;
         public event EventHandler ChangeButt;
@@ -57,6 +60,7 @@ namespace SecurityAgencyIS
         public MainWindow(string userRole)
         {
             InitializeComponent();
+            dataBase = new DBManage();
             this.StartPosition = FormStartPosition.CenterScreen;
             mainWindowPresenter = new MainWindowPresenter(this);
             _userRole = userRole;
@@ -275,10 +279,6 @@ namespace SecurityAgencyIS
 
         }
 
-        private void AboutTheProgramToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AboutTheProgram?.Invoke(this, EventArgs.Empty);
-        }
         public string deleteFindId => textBox1.Text;
         private void DeleteButton_Click(object sender, EventArgs e)
         {
@@ -287,6 +287,7 @@ namespace SecurityAgencyIS
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
+
             if (tableName == "")
             {
                 MessageBox.Show("Выберите сначала таблицу!");
@@ -299,7 +300,8 @@ namespace SecurityAgencyIS
                 }
                 else
                 {
-                dataBase.Find(comboBox1.Text, tableName, textBox1.Text, dataGridView1);
+                    MessageBox.Show($"Поиск по колонке: {comboBox1.Text}, таблице: {tableName}, значению: {textBox1.Text}");
+                    dataBase.Find(comboBox1.Text, tableName, textBox1.Text, dataGridView1);
                 }
             }
         }
@@ -343,6 +345,54 @@ namespace SecurityAgencyIS
                 }
                 whiteTheme = true;
             }
+        }
+
+        private void спраToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Documents?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void сотрудникиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TableMenuEmployee?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "employee";
+        }
+
+        private void физЛицаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TableMenuIndividualEntity?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "individualentity";
+        }
+
+        private void юрлицаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TableMenuLegalEntity?.Invoke(this, EventArgs.Empty);
+            comboBox1.Items.Clear();
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                comboBox1.Items.Add(column.HeaderText);
+            }
+            tableName = "legalentity";
+        }
+
+        private void содержаниеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutTheProgram?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void руководствоToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UserManual?.Invoke(this, EventArgs.Empty);
         }
     }
 }

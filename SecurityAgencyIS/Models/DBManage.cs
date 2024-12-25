@@ -44,7 +44,7 @@ namespace SecurityAgencyIS.Models
             command.Connection = conn;
             command.CommandType = CommandType.Text;
             command.CommandText = "INSERT INTO users (userlogin, userpassword, roles, salt) VALUES (@userlogin, @userpassword, @roles, @salt)";
-            
+
             command.Parameters.AddWithValue("@userlogin", login);
             command.Parameters.AddWithValue("@userpassword", password);
             command.Parameters.AddWithValue("@roles", role);
@@ -209,18 +209,22 @@ namespace SecurityAgencyIS.Models
             command.Connection = conn;
             conn.Open();
             command.CommandType = CommandType.Text;
+            jsonContent = File.ReadAllText(jsonFilePath);
             dynamic tables = JsonConvert.DeserializeObject(jsonContent);
+
             string sql = $"UPDATE {tablename} SET ";
             int i = 0;
             string idparam = "@idparam";
             string Where = $" WHERE id = {idparam};";
-            command.Parameters.AddWithValue(idparam, Convert.ToInt32(update[i]));
-            i++;
-            int k = 0;
-            for (int j = 0; j < update.Length; j++)
+
+            // Проверяем ID
+            if (!int.TryParse(update[0], out int id))
             {
-                k++;
+                throw new Exception("ID должен быть числом.");
             }
+            command.Parameters.AddWithValue(idparam, id);
+            i++;
+
             try
             {
                 foreach (var table in tables)
@@ -229,61 +233,28 @@ namespace SecurityAgencyIS.Models
                     {
                         var columns = table.columns;
                         var lastcolum = columns.Last;
-                        foreach (var column in table.columns)
-                        {
 
-                            if (column.primary_key != null)
-                            {
-                                continue;
-                            }
-                            if (update[i] == "" || update[i] == " ")
+                        foreach (var column in columns)
+                        {
+                            if (column.primary_key != null) continue;
+
+                            string paramname = $"@param{i}";
+                            string columnName = column.column_name.ToString();
+                            string columnType = column.type != null ? column.type.ToString() : "";
+
+                            if (string.IsNullOrWhiteSpace(update[i]))
                             {
                                 i++;
                                 continue;
                             }
-                            if (column.references != null)
-                            {
-                                var refer = column.references;
-                                string paramname = $"@param{i}";
-                                sql += $"{column.column_name} = {paramname} ";
-                                string rtable = refer.table != null ? refer.table.ToString() : "";
-                                string Replece = refer.replace_with != null ? refer.replace_with.ToString() : "";
-                                string refertype = refer.type != null ? refer.type.ToString() : "";
-                                object rr;
-                                try
-                                {
-                                    rr = ReturnType(refertype, update[i]);
-                                }
-                                catch (Exception ex)
-                                {
-                                    MessageBox.Show($"Ошибка приведения к типу: {ex.Message}");
-                                    return;
-                                }
-                                int? ids = FindIdByType(rtable, Replece, rr);
 
-                                command.Parameters.AddWithValue(paramname, ids);
-                            }
-                            else
-                            {
-                                string paramname = $"@param{i}";
-                                sql += $"{column.column_name} = {paramname} ";
-                                string columnType = column.type != null ? column.type.ToString() : "";
-                                object r;
-                                try
-                                {
-                                    r = ReturnType(columnType, update[i]);
-                                }
-                                catch (Exception ex)
-                                {
-                                    MessageBox.Show($"Ошибка приведения к типу: {ex.Message}");
-                                    return;
-                                }
-                                command.Parameters.AddWithValue(paramname, r);
-                            }
-                            if (column != lastcolum && k != 2)
+                            object value = ReturnType(columnType, update[i]);
+                            command.Parameters.AddWithValue(paramname, value);
+
+                            sql += $"{columnName} = {paramname}";
+                            if (column != lastcolum)
                             {
                                 sql += ", ";
-                                k--;
                             }
                             i++;
                         }
@@ -291,16 +262,28 @@ namespace SecurityAgencyIS.Models
                 }
 
                 sql += Where;
+
+                // Логирование SQL-запроса
+                //MessageBox.Show($"SQL-запрос: {sql}");
+                //foreach (NpgsqlParameter param in command.Parameters)
+                //{
+                //    MessageBox.Show($"Параметр: {param.ParameterName}, Значение: {param.Value}");
+                //}
+
                 command.CommandText = sql;
                 command.ExecuteNonQuery();
-                command.Dispose();
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"Ошибка: {ex.Message}");
+            }
+            finally
+            {
+                command.Dispose();
+                conn.Close();
             }
         }
+
         public void Delete(string tablename, string column, string data)
         {
             string sql = $"DELETE FROM {tablename} WHERE {column} = {data};";
@@ -331,6 +314,7 @@ namespace SecurityAgencyIS.Models
         {
             NpgsqlCommand command = new NpgsqlCommand();
             NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+
             command.Connection = conn;
             conn.Open();
             command.CommandType = CommandType.Text;
@@ -355,32 +339,42 @@ namespace SecurityAgencyIS.Models
                             {
                                 var refer = column.references;
                                 sql += $"{refer.table}.{refer.replace_with} AS {column.lname}";
-                                string s = column.lname.ToString();
+                                string s = column.column_name.ToString();
                                 if (columna == s)
                                 {
                                     string rtable = refer.table != null ? refer.table.ToString() : "";
                                     string Replece = refer.replace_with != null ? refer.replace_with.ToString() : "";
                                     string refertype = refer.type != null ? refer.type.ToString() : "";
                                     object rr;
-                                    try
+                                    if (refertype == "text")
                                     {
-                                        rr = ReturnType(refertype, data);
+                                        string pattern = $"%{data}%";
+                                        command.Parameters.AddWithValue(a, pattern);
+                                        where += $" {refer.table}.{Replece} LIKE {a} ";
                                     }
-                                    catch (Exception ex)
+                                    else
                                     {
-                                        MessageBox.Show($"Ошибка приведения к типу: {ex.Message}");
-                                        return;
+
+                                        try
+                                        {
+                                            rr = ReturnType(refertype, data);
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            MessageBox.Show($"Ошибка приведения к типу: {ex.Message}");
+                                            return;
+                                        }
+                                        int? ids = FindIdByType(rtable, Replece, rr);
+                                        where += $" {refer.table}.id = {a} ";
+                                        command.Parameters.AddWithValue(a, ids);
                                     }
-                                    int? ids = FindIdByType(rtable, Replece, rr);
-                                    where += $" {refer.table}.id = {a} ";
-                                    command.Parameters.AddWithValue(a, ids);
                                 }
                             }
                             else
                             {
                                 if (column.primary_key == null) sql += $"{table.table_name}.{column.column_name} AS \"{column.lname}\"";
                                 else sql += $"{table.table_name}.{column.column_name}";
-                                string s = column.lname.ToString();
+                                string s = column.column_name.ToString();
 
                                 if (columna == s)
                                 {
@@ -445,6 +439,35 @@ namespace SecurityAgencyIS.Models
             finally
             {
                 command.Dispose();
+            }
+        }
+        public void QueryTool(string sql, DataGridView dataGridView)
+        {
+            try
+            {
+                using (var command = new NpgsqlCommand())
+                {
+                    NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+
+                    command.Connection = conn;
+                    conn.Open();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = sql;
+                    using (var reader = command.ExecuteReader())
+                    {
+                        dataGridView.DataSource = null;
+
+                        var dataTable = new System.Data.DataTable();
+                        dataTable.Load(reader);
+
+                        dataGridView.DataSource = dataTable;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при выполнении запроса: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

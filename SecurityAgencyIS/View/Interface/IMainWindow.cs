@@ -43,6 +43,8 @@ namespace SecurityAgencyIS.View.Interface
         //public event EventHandler AddTableMenuUsers;
 
         public event EventHandler AboutTheProgram;
+        public event EventHandler Documents;
+        public event EventHandler UserManual;
 
         public event EventHandler AddButt;
         public event EventHandler ChangeButt;

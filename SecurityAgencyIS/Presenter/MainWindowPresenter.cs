@@ -42,6 +42,8 @@ namespace SecurityAgencyIS.Presenter
                 _mainWindow.DeleteButt += DeleteButton;
                 _mainWindow.FindButt += FindButton;
                 _mainWindow.AboutTheProgram += AboutTheProgramButton;
+                _mainWindow.UserManual += UserManualShow;
+                _mainWindow.Documents += DocumentsShow;
         }
 
         public void AddButton(object args, EventArgs e)
@@ -327,9 +329,22 @@ namespace SecurityAgencyIS.Presenter
         }
         public void AboutTheProgramButton(object args, EventArgs e)
         {
-            MessageBox.Show("Программа была разработана студентом НГТУ НЭТИ Соболевым И. О. Группа АВТ-214.", "О программе");
+            AboutWindow aboutWindow = new AboutWindow();
+            aboutWindow.ShowDialog();
             SoundPlayer simpleSound = new SoundPlayer(@"d:\Dev\AboutTheProgram.wav");
             simpleSound.Play();
         }
+
+        public void UserManualShow(object args, EventArgs e)
+        {
+            UserManualWindow userManualWindow = new UserManualWindow();
+            userManualWindow.ShowDialog();
+        }
+        public void DocumentsShow(object args, EventArgs e)
+        {
+            Documents documents = new Documents();
+            documents.Show();
+        }
+
     }
 }

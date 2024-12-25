@@ -32,13 +32,10 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.спраToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справочникToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.StripMenuEmployee = new System.Windows.Forms.ToolStripMenuItem();
             this.StripMenuEvents = new System.Windows.Forms.ToolStripMenuItem();
             this.StripMenuCities = new System.Windows.Forms.ToolStripMenuItem();
             this.StripMenuStreets = new System.Windows.Forms.ToolStripMenuItem();
             this.StripMenuContracts = new System.Windows.Forms.ToolStripMenuItem();
-            this.StripMenuIndividualEntity = new System.Windows.Forms.ToolStripMenuItem();
-            this.StripMenuLegalEntity = new System.Windows.Forms.ToolStripMenuItem();
             this.StripMenuOwners = new System.Windows.Forms.ToolStripMenuItem();
             this.StripMenuJobs = new System.Windows.Forms.ToolStripMenuItem();
             this.StripMenuObjects = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,6 +48,9 @@
             this.разноеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.тёмныйРежимToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutTheProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.сотрудникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.физЛицаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.юрлицаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeleteButton = new System.Windows.Forms.Button();
             this.AddLineButton = new System.Windows.Forms.Button();
             this.ChangeButton = new System.Windows.Forms.Button();
@@ -60,6 +60,8 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.содержаниеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.руководствоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -87,7 +89,10 @@
             this.спраToolStripMenuItem,
             this.справочникToolStripMenuItem,
             this.разноеToolStripMenuItem,
-            this.AboutTheProgramToolStripMenuItem});
+            this.AboutTheProgramToolStripMenuItem,
+            this.сотрудникиToolStripMenuItem,
+            this.физЛицаToolStripMenuItem,
+            this.юрлицаToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -102,18 +107,16 @@
             this.спраToolStripMenuItem.Name = "спраToolStripMenuItem";
             this.спраToolStripMenuItem.Size = new System.Drawing.Size(125, 30);
             this.спраToolStripMenuItem.Text = "Документы";
+            this.спраToolStripMenuItem.Click += new System.EventHandler(this.спраToolStripMenuItem_Click);
             // 
             // справочникToolStripMenuItem
             // 
             this.справочникToolStripMenuItem.BackColor = System.Drawing.Color.Goldenrod;
             this.справочникToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StripMenuEmployee,
             this.StripMenuEvents,
             this.StripMenuCities,
             this.StripMenuStreets,
             this.StripMenuContracts,
-            this.StripMenuIndividualEntity,
-            this.StripMenuLegalEntity,
             this.StripMenuOwners,
             this.StripMenuJobs,
             this.StripMenuObjects,
@@ -127,13 +130,6 @@
             this.справочникToolStripMenuItem.Name = "справочникToolStripMenuItem";
             this.справочникToolStripMenuItem.Size = new System.Drawing.Size(118, 30);
             this.справочникToolStripMenuItem.Text = "Справочник";
-            // 
-            // StripMenuEmployee
-            // 
-            this.StripMenuEmployee.Name = "StripMenuEmployee";
-            this.StripMenuEmployee.Size = new System.Drawing.Size(258, 30);
-            this.StripMenuEmployee.Text = "Сотрудники";
-            this.StripMenuEmployee.Click += new System.EventHandler(this.StripMenuEmployee_Click);
             // 
             // StripMenuEvents
             // 
@@ -162,20 +158,6 @@
             this.StripMenuContracts.Size = new System.Drawing.Size(258, 30);
             this.StripMenuContracts.Text = "Договоры";
             this.StripMenuContracts.Click += new System.EventHandler(this.StripMenuContracts_Click);
-            // 
-            // StripMenuIndividualEntity
-            // 
-            this.StripMenuIndividualEntity.Name = "StripMenuIndividualEntity";
-            this.StripMenuIndividualEntity.Size = new System.Drawing.Size(258, 30);
-            this.StripMenuIndividualEntity.Text = "Физические лица";
-            this.StripMenuIndividualEntity.Click += new System.EventHandler(this.StripMenuIndividualEntity_Click);
-            // 
-            // StripMenuLegalEntity
-            // 
-            this.StripMenuLegalEntity.Name = "StripMenuLegalEntity";
-            this.StripMenuLegalEntity.Size = new System.Drawing.Size(258, 30);
-            this.StripMenuLegalEntity.Text = "Юридические лица";
-            this.StripMenuLegalEntity.Click += new System.EventHandler(this.StripMenuLegalEntity_Click);
             // 
             // StripMenuOwners
             // 
@@ -261,11 +243,37 @@
             // AboutTheProgramToolStripMenuItem
             // 
             this.AboutTheProgramToolStripMenuItem.BackColor = System.Drawing.Color.Goldenrod;
+            this.AboutTheProgramToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.содержаниеToolStripMenuItem,
+            this.руководствоToolStripMenuItem});
             this.AboutTheProgramToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.AboutTheProgramToolStripMenuItem.Name = "AboutTheProgramToolStripMenuItem";
             this.AboutTheProgramToolStripMenuItem.Size = new System.Drawing.Size(129, 30);
             this.AboutTheProgramToolStripMenuItem.Text = "О программе";
-            this.AboutTheProgramToolStripMenuItem.Click += new System.EventHandler(this.AboutTheProgramToolStripMenuItem_Click);
+            // 
+            // сотрудникиToolStripMenuItem
+            // 
+            this.сотрудникиToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.сотрудникиToolStripMenuItem.Name = "сотрудникиToolStripMenuItem";
+            this.сотрудникиToolStripMenuItem.Size = new System.Drawing.Size(125, 30);
+            this.сотрудникиToolStripMenuItem.Text = "Сотрудники";
+            this.сотрудникиToolStripMenuItem.Click += new System.EventHandler(this.сотрудникиToolStripMenuItem_Click);
+            // 
+            // физЛицаToolStripMenuItem
+            // 
+            this.физЛицаToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.физЛицаToolStripMenuItem.Name = "физЛицаToolStripMenuItem";
+            this.физЛицаToolStripMenuItem.Size = new System.Drawing.Size(109, 30);
+            this.физЛицаToolStripMenuItem.Text = "Физ. лица";
+            this.физЛицаToolStripMenuItem.Click += new System.EventHandler(this.физЛицаToolStripMenuItem_Click);
+            // 
+            // юрлицаToolStripMenuItem
+            // 
+            this.юрлицаToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.юрлицаToolStripMenuItem.Name = "юрлицаToolStripMenuItem";
+            this.юрлицаToolStripMenuItem.Size = new System.Drawing.Size(95, 30);
+            this.юрлицаToolStripMenuItem.Text = "Юр.лица";
+            this.юрлицаToolStripMenuItem.Click += new System.EventHandler(this.юрлицаToolStripMenuItem_Click);
             // 
             // DeleteButton
             // 
@@ -373,6 +381,20 @@
             this.panel1.Size = new System.Drawing.Size(1046, 570);
             this.panel1.TabIndex = 4;
             // 
+            // содержаниеToolStripMenuItem
+            // 
+            this.содержаниеToolStripMenuItem.Name = "содержаниеToolStripMenuItem";
+            this.содержаниеToolStripMenuItem.Size = new System.Drawing.Size(224, 30);
+            this.содержаниеToolStripMenuItem.Text = "Содержание";
+            this.содержаниеToolStripMenuItem.Click += new System.EventHandler(this.содержаниеToolStripMenuItem_Click);
+            // 
+            // руководствоToolStripMenuItem
+            // 
+            this.руководствоToolStripMenuItem.Name = "руководствоToolStripMenuItem";
+            this.руководствоToolStripMenuItem.Size = new System.Drawing.Size(224, 30);
+            this.руководствоToolStripMenuItem.Text = "Руководство";
+            this.руководствоToolStripMenuItem.Click += new System.EventHandler(this.руководствоToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -403,13 +425,10 @@
         private ToolStripMenuItem справочникToolStripMenuItem;
         private ToolStripMenuItem разноеToolStripMenuItem;
         private ToolStripMenuItem AboutTheProgramToolStripMenuItem;
-        private ToolStripMenuItem StripMenuEmployee;
         private ToolStripMenuItem StripMenuEvents;
         private ToolStripMenuItem StripMenuCities;
         private ToolStripMenuItem StripMenuStreets;
         private ToolStripMenuItem StripMenuContracts;
-        private ToolStripMenuItem StripMenuIndividualEntity;
-        private ToolStripMenuItem StripMenuLegalEntity;
         private ToolStripMenuItem StripMenuOwners;
         private ToolStripMenuItem StripMenuJobs;
         private ToolStripMenuItem StripMenuObjects;
@@ -430,5 +449,10 @@
         private ComboBox comboBox1;
         private Label label2;
         private Panel panel1;
+        private ToolStripMenuItem сотрудникиToolStripMenuItem;
+        private ToolStripMenuItem физЛицаToolStripMenuItem;
+        private ToolStripMenuItem юрлицаToolStripMenuItem;
+        private ToolStripMenuItem содержаниеToolStripMenuItem;
+        private ToolStripMenuItem руководствоToolStripMenuItem;
     }
 }
